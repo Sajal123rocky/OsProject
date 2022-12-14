@@ -1,0 +1,115 @@
+sajal@sajal-SVE15113ENB:~$ sudo su
+[sudo] password for sajal: 
+root@sajal-SVE15113ENB:/home/sajal# cd Desktop/mywebsite/
+root@sajal-SVE15113ENB:/home/sajal/Desktop/mywebsite# docker build -t mywebsite .
+Sending build context to Docker daemon  395.8kB
+Step 1/2 : FROM httpd
+ ---> 157dcdf23d6c
+Step 2/2 : COPY . /usr/local/apache2/htdocs/
+ ---> Using cache
+ ---> fa61381d1da3
+Successfully built fa61381d1da3
+Successfully tagged mywebsite:latest
+root@sajal-SVE15113ENB:/home/sajal/Desktop/mywebsite# docker images
+REPOSITORY           TAG       IMAGE ID       CREATED             SIZE
+mywebsite            latest    fa61381d1da3   25 minutes ago      146MB
+sajalsrivastava/sq   latest    a5933beba7b1   About an hour ago   145MB
+sq                   latest    a5933beba7b1   About an hour ago   145MB
+httpd                latest    157dcdf23d6c   8 days ago          145MB
+ubuntu               with_vi   6ce69a241c74   2 weeks ago         177MB
+ubuntu               latest    a8780b506fa4   5 weeks ago         77.8MB
+hello-world          latest    feb5d9fea6a5   14 months ago       13.3kB
+root@sajal-SVE15113ENB:/home/sajal/Desktop/mywebsite# docker run -itd -p 80:80 mywebsite mywebsite 
+d15c19e835efe083f5df9857e3e4c2dff6727dee22a0b9f816677af6750b6135
+docker: Error response from daemon: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: exec: "mywebsite": executable file not found in $PATH: unknown.
+root@sajal-SVE15113ENB:/home/sajal/Desktop/mywebsite# docker run -itd -p 80:80 --name mywebsite mywebsite 
+eaafb4193c5d7b439ceda796486d2f13f18bd2915a4a016ad813a7b1a808df51
+root@sajal-SVE15113ENB:/home/sajal/Desktop/mywebsite# dcoker ps
+Command 'dcoker' not found, did you mean:
+  command 'docker' from snap docker (20.10.17)
+  command 'docker' from deb docker.io (20.10.12-0ubuntu4)
+  command 'docker' from deb podman-docker (3.4.4+ds1-1ubuntu1)
+See 'snap info <snapname>' for additional versions.
+root@sajal-SVE15113ENB:/home/sajal/Desktop/mywebsite# docker ps
+CONTAINER ID   IMAGE       COMMAND              CREATED          STATUS          PORTS                               NAMES
+eaafb4193c5d   mywebsite   "httpd-foreground"   16 seconds ago   Up 15 seconds   0.0.0.0:80->80/tcp, :::80->80/tcp   mywebsite
+root@sajal-SVE15113ENB:/home/sajal/Desktop/mywebsite# docker login
+Authenticating with existing credentials...
+WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+root@sajal-SVE15113ENB:/home/sajal/Desktop/mywebsite# docker tag mywebsite sajalsrivastava/mywebsite:latest
+root@sajal-SVE15113ENB:/home/sajal/Desktop/mywebsite# docker images
+REPOSITORY                  TAG       IMAGE ID       CREATED             SIZE
+mywebsite                   latest    fa61381d1da3   29 minutes ago      146MB
+sajalsrivastava/mywebsite   latest    fa61381d1da3   29 minutes ago      146MB
+sq                          latest    a5933beba7b1   About an hour ago   145MB
+sajalsrivastava/sq          latest    a5933beba7b1   About an hour ago   145MB
+httpd                       latest    157dcdf23d6c   8 days ago          145MB
+ubuntu                      with_vi   6ce69a241c74   2 weeks ago         177MB
+ubuntu                      latest    a8780b506fa4   5 weeks ago         77.8MB
+hello-world                 latest    feb5d9fea6a5   14 months ago       13.3kB
+root@sajal-SVE15113ENB:/home/sajal/Desktop/mywebsite# docker login
+Authenticating with existing credentials...
+WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+root@sajal-SVE15113ENB:/home/sajal/Desktop/mywebsite# docker push sajalsrivastava/mywebsite:latest
+The push refers to repository [docker.io/sajalsrivastava/mywebsite]
+2f5c62811a13: Pushed 
+df40ccf15557: Mounted from sajalsrivastava/sq 
+10d8cd84bc49: Mounted from sajalsrivastava/sq 
+8bb2d8abcb18: Mounted from sajalsrivastava/sq 
+2bccf7e3b941: Mounted from sajalsrivastava/sq 
+b5ebffba54d3: Mounted from sajalsrivastava/sq 
+latest: digest: sha256:fb6879aea9b3b47b626579a81a1cfdcbc19cc60b9ecce8a097c7d37d9d0ef466 size: 1576
+root@sajal-SVE15113ENB:/home/sajal/Desktop/mywebsite# docker pull sajalsrivastava/mywebsite
+Using default tag: latest
+latest: Pulling from sajalsrivastava/mywebsite
+Digest: sha256:fb6879aea9b3b47b626579a81a1cfdcbc19cc60b9ecce8a097c7d37d9d0ef466
+Status: Image is up to date for sajalsrivastava/mywebsite:latest
+docker.io/sajalsrivastava/mywebsite:latest
+root@sajal-SVE15113ENB:/home/sajal/Desktop/mywebsite# docker images
+REPOSITORY                  TAG       IMAGE ID       CREATED             SIZE
+mywebsite                   latest    fa61381d1da3   32 minutes ago      146MB
+sajalsrivastava/mywebsite   latest    fa61381d1da3   32 minutes ago      146MB
+sq                          latest    a5933beba7b1   About an hour ago   145MB
+sajalsrivastava/sq          latest    a5933beba7b1   About an hour ago   145MB
+httpd                       latest    157dcdf23d6c   8 days ago          145MB
+ubuntu                      with_vi   6ce69a241c74   2 weeks ago         177MB
+ubuntu                      latest    a8780b506fa4   5 weeks ago         77.8MB
+hello-world                 latest    feb5d9fea6a5   14 months ago       13.3kB
+root@sajal-SVE15113ENB:/home/sajal/Desktop/mywebsite# docker ps
+CONTAINER ID   IMAGE       COMMAND              CREATED         STATUS         PORTS                               NAMES
+eaafb4193c5d   mywebsite   "httpd-foreground"   4 minutes ago   Up 4 minutes   0.0.0.0:80->80/tcp, :::80->80/tcp   mywebsite
+root@sajal-SVE15113ENB:/home/sajal/Desktop/mywebsite# docker run -p 8080:80 sajalsrivastava/mywebsite
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.17.0.3. Set the 'ServerName' directive globally to suppress this message
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.17.0.3. Set the 'ServerName' directive globally to suppress this message
+[Wed Dec 14 17:16:06.404048 2022] [mpm_event:notice] [pid 1:tid 140366243351872] AH00489: Apache/2.4.54 (Unix) configured -- resuming normal operations
+[Wed Dec 14 17:16:06.404733 2022] [core:notice] [pid 1:tid 140366243351872] AH00094: Command line: 'httpd -D FOREGROUND'
+172.17.0.1 - - [14/Dec/2022:17:17:08 +0000] "GET / HTTP/1.1" 200 667
+172.17.0.1 - - [14/Dec/2022:17:17:08 +0000] "GET /styles.css HTTP/1.1" 200 1094
+172.17.0.1 - - [14/Dec/2022:17:17:09 +0000] "GET /index.js HTTP/1.1" 200 1972
+172.17.0.1 - - [14/Dec/2022:17:17:09 +0000] "GET /images/tom1.png HTTP/1.1" 200 24088
+172.17.0.1 - - [14/Dec/2022:17:17:09 +0000] "GET /images/tom2.png HTTP/1.1" 200 23139
+172.17.0.1 - - [14/Dec/2022:17:17:09 +0000] "GET /images/tom3.png HTTP/1.1" 200 28500
+172.17.0.1 - - [14/Dec/2022:17:17:09 +0000] "GET /images/tom4.png HTTP/1.1" 200 29206
+172.17.0.1 - - [14/Dec/2022:17:17:09 +0000] "GET /images/crash.png HTTP/1.1" 200 19562
+172.17.0.1 - - [14/Dec/2022:17:17:10 +0000] "GET /images/kick.png HTTP/1.1" 200 53148
+172.17.0.1 - - [14/Dec/2022:17:17:10 +0000] "GET /images/snare.png HTTP/1.1" 200 17195
+172.17.0.1 - - [14/Dec/2022:17:17:10 +0000] "GET /favicon.ico HTTP/1.1" 404 196
+172.17.0.1 - - [14/Dec/2022:17:17:39 +0000] "GET /sounds/tom-1.mp3 HTTP/1.1" 206 22859
+172.17.0.1 - - [14/Dec/2022:17:17:39 +0000] "GET /favicon.ico HTTP/1.1" 404 196
+172.17.0.1 - - [14/Dec/2022:17:17:39 +0000] "GET /sounds/tom-2.mp3 HTTP/1.1" 206 36234
+172.17.0.1 - - [14/Dec/2022:17:17:40 +0000] "GET /sounds/tom-3.mp3 HTTP/1.1" 206 29547
+172.17.0.1 - - [14/Dec/2022:17:17:40 +0000] "GET /sounds/tom-4.mp3 HTTP/1.1" 206 28490
+172.17.0.1 - - [14/Dec/2022:17:17:41 +0000] "GET /sounds/crash.mp3 HTTP/1.1" 206 34562
+172.17.0.1 - - [14/Dec/2022:17:17:41 +0000] "GET /sounds/kick-bass.mp3 HTTP/1.1" 206 1568
+172.17.0.1 - - [14/Dec/2022:17:17:41 +0000] "GET /sounds/snare.mp3 HTTP/1.1" 206 26304
+172.17.0.1 - - [14/Dec/2022:17:18:29 +0000] "-" 408 -
+
+
